@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+<h2>Sign Up</h2>
+<form id="signupForm">
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Sign Up</button>
+</form>
+<script>
+    document.getElementById('signupForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Send the username and password to the server
+        const response = await fetch('/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            // Handle successful signup
+            alert('Signup successful!');
+        } else {
+            // Handle signup error
+            alert('Signup failed: ' + data.message);
+        }
+    };
+</script>
+<b>Already have an account?</b>
+<button onclick="location.href='/login'">Log In</button>
+<button onclick="window.location.href='../'">Homepage</button>
+</body>
+</html>
